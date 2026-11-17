@@ -164,7 +164,7 @@ function DownloadButton({ guestName }) {
   }
   return (
     <div className="invitation-download">
-      <button className="button outline" onClick={download} disabled={busy} aria-busy={busy} title="Tải thiệp PNG cá nhân hóa · 2000 × 2800">
+      <button className="button outline" onClick={download} disabled={busy} aria-busy={busy} aria-label={busy ? "Đang tạo thiệp" : "Tải thiệp"} title="Tải thiệp PNG cá nhân hóa · 2000 × 2800">
         <Download size={12} /><span>{busy ? "Đang tạo thiệp…" : "Tải Thiệp"}</span>
       </button>
       {error && <p className="download-error" role="alert">{error}</p>}

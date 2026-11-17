@@ -575,6 +575,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   min-height: 580px;
   display: grid;
   grid-template-rows: 68px 26px minmax(0, 1fr) 26px 62px;
+  /* minmax(0,1fr) stops wide header/footer content from stretching the whole grid past the viewport */
+  grid-template-columns: minmax(0, 1fr);
   overflow: hidden;
   background: var(--bg-stage);
   color: var(--text-main);
@@ -889,7 +891,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .portrait-card {
   position: relative;
   aspect-ratio: 687 / 1024;
-  height: clamp(480px, calc(100dvh - 165px), 720px);
+  /* 230px = header 68 + 2 tickers 52 + footer 62 + slide padding 48 → fits the stage without clipping */
+  height: clamp(420px, calc(100dvh - 230px), 720px);
   width: auto;
   max-width: min(520px, 45vw);
   border: 2.5px solid var(--portrait-border);
@@ -907,7 +910,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .portrait-card > img {
   width: 100%;
   height: 100%;
-  object-fit: fill;
+  object-fit: cover;
   display: block;
 }
 .portrait-placeholder {
@@ -923,7 +926,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .portrait-card.compact {
   aspect-ratio: 687 / 1024;
-  height: clamp(380px, calc(100dvh - 210px), 540px);
+  /* leaves room for the CTA button (42px + 16px gap) below the compact portrait */
+  height: clamp(360px, calc(100dvh - 290px), 560px);
   max-height: none;
   width: auto;
   max-width: min(380px, 35vw);
@@ -1805,13 +1809,42 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 }
 
 /* Responsive Media Queries */
+/* Wide screens: cap content width instead of squeezing it (860px made the name wrap onto 3 lines) */
 @media (min-width: 1400px) {
   .header-inner {
-    width: 1030px;
+    width: min(1320px, calc(100% - 64px));
   }
   .intro-layout {
-    width: 860px;
+    width: min(1240px, 100%);
+    grid-template-columns: minmax(0, 1fr) auto;
   }
+}
+
+/* Short desktop/laptop screens (e.g. 1366×768): tighten vertical rhythm so slides fit the stage */
+@media (min-width: 851px) and (max-height: 860px) {
+  .slide {
+    padding-block: 20px;
+  }
+  .intro-copy > .eyebrow { margin-bottom: 6px; }
+  .intro-ornament { margin-bottom: 6px; }
+  .intro-copy > h2 { margin-bottom: 6px; }
+  .intro-copy h1 { margin-bottom: 8px; }
+  .intro-copy blockquote { margin: 14px 0 16px; }
+  .intro-actions { margin-top: 16px; }
+  .intro-copy code { margin-top: 14px; }
+  .invitation-card { padding: 18px 24px; }
+  .invitation-card h2 { margin-top: 2px; font-size: 22px; }
+  .invitation-recipient { margin: 6px auto 8px; }
+  .name-badge { margin: 6px auto; padding: 6px 20px; }
+  .time-badge { margin-top: 6px; }
+  .date-grid { margin: 8px auto; }
+  .date-grid strong { font-size: 30px; }
+  .countdown { margin: 8px 10px 10px; }
+  .countdown > div { padding: 6px 4px 5px; }
+  .venue-box { padding: 10px 14px; margin-top: 6px; }
+  .map-button { margin-top: 10px; min-height: 38px; }
+  .invitation-contact { margin-top: 10px; }
+  .letter-card { max-height: calc(100dvh - 300px); }
 }
 
 @media (max-width: 1100px) {
@@ -1901,6 +1934,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   }
   .header-actions .button span {
     display: inline;
+  }
+  /* "Chúc Mừng" duplicates the bottom nav's last tab; dropping it keeps the header within the viewport */
+  .header-actions > .button:last-child {
+    display: none;
   }
 
   /* Hide redundant bottom ticker on mobile to save vertical space */
@@ -2005,10 +2042,17 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
     margin-top: 14px;
     display: block;
   }
-  .portrait-card {
-    width: min(290px, 85vw);
-    height: clamp(360px, 52vh, 420px);
+  /* Full-width portrait; height follows the image ratio so it is never stretched */
+  .portrait-card,
+  .portrait-card.compact {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    aspect-ratio: 687 / 1024;
     margin: 6px auto 0;
+  }
+  .portrait-card:hover {
+    transform: none;
   }
 
   /* Slide 2: Invitation */
@@ -2083,10 +2127,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
     flex-direction: column;
     align-items: center;
     gap: 14px;
-  }
-  .invitation-portrait .portrait-card {
-    width: min(260px, 78vw);
-    height: 340px;
   }
   .invitation-portrait .button {
     font-size: 12px;
@@ -2192,9 +2232,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .bottom-navigation {
     width: 100%;
     max-width: 440px;
-    display: flex;
-    justify-content: space-between;
-    gap: 4px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2px;
     padding: 4px;
     border-radius: 9999px;
     background: var(--card-bg, #FFFCF7);
@@ -2202,13 +2242,17 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
     box-shadow: 2px 2px 0 0 var(--text-main, #2A231F);
   }
   .bottom-navigation button {
-    flex: 1;
+    min-width: 0;
+    min-height: 34px;
     font-size: 11px;
     font-weight: 700;
-    padding: 6px 4px;
+    line-height: 1.2;
+    padding: 6px 2px;
     border-radius: 9999px;
     text-align: center;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: var(--text-muted);
     background: transparent;
     border: none;
@@ -2217,6 +2261,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .bottom-navigation button.active {
     background: var(--text-main, #2A231F);
     color: var(--bg-stage, #FAF4EA);
+  }
+  /* Step numbers are redundant on small screens and push "Lễ chính thức" out of view */
+  .bottom-navigation button > span {
+    display: none;
   }
   .carousel-controls {
     display: flex;
@@ -2235,6 +2283,23 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
     width: 34px;
     height: 32px;
     border-radius: 9999px;
+  }
+}
+
+/* Narrow phones: icon-only header actions so brand + actions fit on one row */
+@media (max-width: 420px) {
+  .header-actions .button {
+    width: 36px;
+    padding: 0;
+  }
+  .header-actions .button > span {
+    display: none;
+  }
+  .brand-name {
+    max-width: 52vw;
+  }
+  .intro-copy blockquote {
+    margin-inline: 0;
   }
 }
 
