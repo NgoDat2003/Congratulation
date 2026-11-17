@@ -1813,478 +1813,431 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
     width: 860px;
   }
 }
+
 @media (max-width: 1100px) {
   .header-inner {
-    width: calc(100% - 30px);
+    width: calc(100% - 32px);
     gap: 12px;
   }
-  .brand-icon {
-    width: 35px;
-    height: 35px;
-  }
-  .brand-top strong {
-    font-size: 20px;
-  }
-  .brand-degree {
-    font-size: 7px;
-    letter-spacing: 1.2px;
-  }
-  .brand-name {
-    font-size: 7px;
-  }
-  .top-navigation button {
-    font-size: 9px;
-    padding-inline: 8px;
-  }
-  .header-actions {
-    gap: 4px;
-  }
-  .header-actions .button {
-    font-size: 8px;
-    padding-inline: 8px;
-  }
   .intro-layout {
-    width: 780px;
-    gap: 55px;
-  }
-  .carousel-footer {
-    gap: 10px;
-  }
-  .footer-summary {
-    max-width: 250px;
-  }
-  .footer-summary > strong {
-    font-size: 8px;
-  }
-  .footer-summary > span {
-    font-size: 7px;
-  }
-  .bottom-navigation button {
-    padding-inline: 6px;
-    font-size: 6px;
-  }
-}
-@media (max-width: 850px) {
-  .invitation-app {
-    grid-template-rows: 102px 22px minmax(0, 1fr) 22px 65px;
-  }
-  .header-inner {
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding-block: 8px 0;
-    gap: 5px 12px;
-  }
-  .brand-icon {
-    width: 35px;
-    height: 35px;
-  }
-  .brand-top strong {
-    font-size: 20px;
-  }
-  .top-navigation {
-    order: 3;
     width: 100%;
-    justify-content: center;
-    border-top: 1px solid rgba(42, 35, 31, 0.15);
-    padding-top: 3px;
-  }
-  .top-navigation button {
-    padding: 8px 12px;
-    font-size: 9px;
-  }
-  .header-actions .button {
-    font-size: 9px;
-    padding: 7px 10px;
-  }
-  .slide {
-    padding: 25px;
-  }
-  .intro-layout {
-    gap: 30px;
-    grid-template-columns: minmax(0, 1fr) 220px;
-  }
-  .portrait-card {
-    width: 220px;
-    height: 300px;
-  }
-  .intro-copy > h2 {
-    font-size: 25px;
-    margin-bottom: 14px;
-  }
-  .intro-copy h1 {
-    font-size: 29px;
-  }
-  .intro-copy h3 {
-    font-size: 10px;
-  }
-  .intro-copy blockquote {
-    font-size: 14px;
-  }
-  .intro-invitation {
-    font-size: 10px;
-  }
-  .intro-actions {
-    gap: 7px;
-  }
-  .intro-actions .button {
-    font-size: 9px;
-    padding-inline: 10px;
+    gap: 40px;
   }
   .invitation-layout {
-    grid-template-columns: minmax(0, 380px) 220px;
-    gap: 25px;
+    width: 100%;
+    gap: 36px;
   }
-  .invitation-card {
-    padding-inline: 13px;
-  }
-  .invitation-portrait > .button {
-    font-size: 8px;
-    padding-inline: 10px;
-  }
-  .letter-card {
-    max-height: 375px;
-  }
-  .letter-card h2 {
-    font-size: 27px;
-  }
-  .letter-card h3 {
-    font-size: 14px;
-  }
-  .letter-card p {
-    font-size: 10px;
-  }
-  .ceremony-layout { grid-template-columns: 1fr; gap: 40px; max-width: 600px; }
-  .diary-column { width: 100%; }
-  .wish-form { width: min(440px, 100%); justify-self: center; }
   .carousel-footer {
-    grid-template-columns: 1fr auto;
+    gap: 12px;
   }
   .footer-summary {
-    display: none;
-  }
-  .bottom-navigation {
-    justify-self: start;
-  }
-  .bottom-navigation button {
-    font-size: 7px;
-    padding: 8px 9px;
+    max-width: 220px;
   }
 }
-@media (max-height: 720px) and (min-width: 851px) {
+
+/* ==============================================================================
+   TABLET & MOBILE RESPONSIVE (MAX-WIDTH: 850px)
+   ============================================================================== */
+@media (max-width: 850px) {
   .invitation-app {
-    grid-template-rows: 58px 22px minmax(0, 1fr) 22px 50px;
+    height: 100dvh;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: 56px 22px minmax(0, 1fr) auto;
+    overflow: hidden;
   }
-  .slide {
-    padding-block: 18px;
-  }
-}
-@media (max-width: 600px) {
-  .invitation-app {
-    min-height: 480px;
-    grid-template-rows: 108px 21px minmax(0, 1fr) 21px 85px;
+
+  /* Single clean header row - eliminate duplicate top navigation */
+  .site-header {
+    height: 56px;
+    z-index: 50;
   }
   .header-inner {
-    width: calc(100% - 22px);
-    gap: 5px 8px;
+    width: calc(100% - 24px);
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+  .top-navigation {
+    display: none !important;
   }
   .brand {
-    gap: 7px;
+    gap: 8px;
+    min-width: 0;
   }
   .brand-icon {
-    width: 32px;
-    height: 35px;
-    border-radius: 9px;
-  }
-  .brand-icon > svg {
-    width: 19px;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
   }
   .brand-top strong {
     font-size: 19px;
   }
   .brand-top small {
-    font-size: 6px;
-  }
-  .brand-text {
-    gap: 4px;
+    display: none;
   }
   .brand-degree {
-    font-size: 6px;
-    letter-spacing: 1px;
+    display: none;
   }
   .brand-name {
-    font-size: 6px;
-    max-width: 150px;
-    overflow: hidden;
+    font-size: 10px;
     white-space: nowrap;
+    overflow: hidden;
     text-overflow: ellipsis;
+    max-width: 140px;
   }
   .header-actions {
-    gap: 4px;
+    gap: 6px;
+    flex-shrink: 0;
   }
   .header-actions .button {
-    padding: 7px;
-    min-height: 30px;
-    border-radius: 8px;
-    font-size: 8px;
+    font-size: 11px;
+    padding: 6px 10px;
+    min-height: 34px;
+    border-radius: 9999px;
   }
-  .header-actions .button:first-child > span {
-    display: none;
+  .header-actions .button span {
+    display: inline;
   }
-  .header-actions .button:nth-child(2) > span {
-    display: none;
+
+  /* Hide redundant bottom ticker on mobile to save vertical space */
+  .ticker-bottom {
+    display: none !important;
   }
-  .top-navigation {
-    justify-content: space-between;
-    gap: 1px;
-    width: 100%;
-    padding-top: 6px;
-    padding-bottom: 4px;
-    border-top: 1px solid rgba(42, 35, 31, 0.15);
-  }
-  .top-navigation button {
-    font-size: 8px;
-    padding: 7px 6px;
-    border-radius: 7px;
-    line-height: 1.4;
+  .ticker {
+    height: 22px;
   }
   .ticker-track > span {
-    font-size: 8px;
-    letter-spacing: 0.5px;
+    font-size: 10px;
+    letter-spacing: 0.8px;
   }
+
+  /* Stage & Slide Layout */
   .carousel-stage {
-    scroll-behavior: auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
   }
   .slide {
-    padding: 20px 16px 28px;
-    align-items: flex-start;
-  }
-  .intro-layout {
-    grid-template-columns: 1fr;
+    min-height: 100%;
     width: 100%;
-    gap: 24px;
-    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px 16px 36px;
+    box-sizing: border-box;
+  }
+
+  /* Slide 1: Intro */
+  .intro-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 480px;
+    gap: 22px;
+    margin: 0 auto;
   }
   .intro-copy {
     width: 100%;
+    text-align: center;
   }
   .intro-copy > .eyebrow {
-    font-size: 9px;
-    letter-spacing: 1.4px;
-    margin-bottom: 8px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
   }
   .intro-ornament {
-    font-size: 10px;
+    font-size: 12px;
     margin-bottom: 8px;
   }
   .intro-copy > h2 {
-    font-size: 22px;
-    margin-bottom: 10px;
+    font-size: 24px;
+    margin-bottom: 8px;
   }
   .intro-copy h1 {
-    font-size: clamp(26px, 7.5vw, 34px);
+    font-size: clamp(30px, 8.5vw, 42px);
     margin-bottom: 10px;
   }
   .intro-copy h3 {
-    font-size: 11px;
-    letter-spacing: 1.5px;
+    font-size: 12px;
+    letter-spacing: 2px;
   }
   .intro-cohort {
-    font-size: 9px;
+    font-size: 11px;
+    margin-top: 4px;
   }
   .intro-copy blockquote {
-    font-size: 13px;
-    margin-block: 12px;
-    padding: 8px 14px;
+    font-size: 14px;
+    line-height: 1.65;
+    margin: 14px auto;
+    max-width: 420px;
+    padding: 10px 16px;
   }
   .intro-invitation {
-    font-size: 10px;
+    margin-top: 14px;
+    font-size: 11px;
+  }
+  .intro-invitation strong {
+    font-size: 20px;
+    display: block;
+    margin: 4px 0;
   }
   .intro-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
     margin-top: 14px;
-    gap: 8px;
   }
   .intro-actions .button {
-    font-size: 10px;
-    padding: 8px 12px;
+    font-size: 12px;
+    padding: 10px 18px;
+    min-height: 42px;
   }
   .intro-copy code {
-    font-size: 8px;
-    margin-top: 12px;
+    font-size: 10px;
+    margin-top: 14px;
+    display: block;
   }
   .portrait-card {
-    width: min(260px, 80vw);
-    height: 340px;
+    width: min(290px, 85vw);
+    height: clamp(360px, 52vh, 420px);
+    margin: 6px auto 0;
   }
-  .portrait-caption h3 {
-    font-size: 17px;
-  }
-  .portrait-caption p {
-    font-size: 9px;
-  }
+
+  /* Slide 2: Invitation */
   .invitation-layout {
-    grid-template-columns: 1fr;
-    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
+    max-width: 480px;
+    gap: 22px;
+    margin: 0 auto;
   }
   .invitation-card {
-    padding: 18px 14px;
-    border-radius: 16px;
+    width: 100%;
+    padding: 24px 18px;
+    border-radius: 20px;
   }
   .invitation-card h2 {
-    font-size: 20px;
+    font-size: 22px;
   }
   .name-badge {
-    font-size: 16px;
+    font-size: 18px;
+    padding: 6px 16px;
   }
   .time-badge {
-    font-size: 10px;
+    font-size: 11px;
   }
   .date-grid {
-    margin-block: 10px;
+    margin: 12px 0;
+    gap: 8px;
   }
   .date-grid strong {
-    font-size: 24px;
+    font-size: 26px;
   }
   .countdown {
-    margin-inline: 0;
-    gap: 6px;
-    margin-block: 7px 10px;
+    gap: 8px;
+    margin: 12px 0;
   }
   .countdown > div {
-    padding-block: 8px;
+    padding: 8px 4px;
   }
   .countdown strong {
-    font-size: 20px;
+    font-size: 22px;
+  }
+  .countdown small {
+    font-size: 9px;
   }
   .venue-box {
-    padding: 12px 10px;
+    padding: 14px 12px;
   }
   .venue-box h4 {
-    font-size: 14px;
-  }
-  .venue-box > strong {
-    font-size: 11px;
+    font-size: 16px;
   }
   .venue-box > p {
-    font-size: 10px;
+    font-size: 12px;
   }
-  .invitation-contact > span {
+  .map-button {
+    font-size: 12px;
+    min-height: 42px;
+  }
+  .invitation-contact {
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .invitation-contact .button {
     font-size: 11px;
+    padding: 8px 14px;
   }
   .invitation-portrait {
-    gap: 15px;
-  }
-  .invitation-portrait > .button {
-    font-size: 10px;
-  }
-  .location-pending {
-    font-size: 10px;
-    margin-top: 13px;
-  }
-  .gratitude-layout {
-    grid-template-columns: 1fr;
-    gap: 24px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .invitation-portrait .portrait-card {
+    width: min(260px, 78vw);
+    height: 340px;
+  }
+  .invitation-portrait .button {
+    font-size: 12px;
+    min-height: 42px;
+    padding: 10px 18px;
+  }
+
+  /* Slide 3: Letter */
+  .gratitude-layout {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
   }
   .letter-card {
-    max-height: 400px;
-    padding: 20px 16px;
-    border-radius: 18px;
-  }
-  .letter-card > .eyebrow {
-    font-size: 8px;
+    padding: 24px 18px;
+    max-height: none;
+    border-radius: 20px;
   }
   .letter-card h2 {
-    font-size: 24px;
+    font-size: 28px;
   }
   .letter-card h3 {
-    font-size: 13px;
+    font-size: 15px;
   }
   .letter-card p {
-    font-size: 12px;
-    line-height: 1.8;
+    font-size: 14px;
+    line-height: 1.85;
   }
-  .ceremony-layout { gap: 28px; width: 100%; }
-  .ceremony-layout.form-only { width: 100%; }
-  .diary-heading .eyebrow { font-size: 8px; letter-spacing: 1.8px; }
-  .diary-heading h2 { font-size: 22px; }
-  .diary-book { margin-top: 20px; width: 100%; max-width: 290px; }
-  .book-spread { grid-template-columns: 1fr; }
-  .book-dedication { display: none; }
-  .book-spread::after { left: 6px; width: 20px; }
-  .book-page { padding: 24px 20px 18px 24px; }
-  .page-message { font-size: 14px; }
-  .page-signature strong { font-size: 17px; }
-  .wish-form { padding: 22px 18px; width: 100%; }
-  .wish-form > p,
+  .letter-signature {
+    margin-top: 24px;
+    font-size: 14px;
+  }
+  .letter-signature strong {
+    font-size: 22px;
+  }
+
+  /* Slide 4: Ceremony / Wish Form */
+  .ceremony-layout,
+  .ceremony-layout.form-only {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .ceremony-layout.with-diary {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    width: 100%;
+  }
+  .diary-column {
+    width: 100%;
+  }
+  .diary-book {
+    margin: 16px auto 8px;
+    width: 100%;
+    max-width: 290px;
+  }
+  .wish-form {
+    padding: 22px 18px;
+    border-radius: 20px;
+    width: 100%;
+  }
+  .wish-form > h2 {
+    font-size: 24px;
+  }
+  .wish-form > p {
+    font-size: 13px;
+  }
   .wish-note {
-    font-size: 11px;
+    font-size: 12px;
+    padding: 10px 12px;
   }
   .wish-form label {
-    font-size: 12px;
+    font-size: 13px;
   }
   .wish-form input,
   .wish-form textarea {
-    font-size: 15px;
-    padding: 10px 12px;
-  }
-  .wish-form input::placeholder,
-  .wish-form textarea::placeholder {
-    font-size: 12px;
+    font-size: 16px; /* Prevents auto-zoom on iOS Safari */
+    padding: 12px 14px;
   }
   .wish-form textarea {
-    min-height: 100px;
+    min-height: 110px;
   }
   .character-count {
-    font-size: 9px;
+    font-size: 11px;
   }
   .send-button {
-    font-size: 11px;
-    padding-block: 11px;
+    font-size: 13px;
+    min-height: 44px;
   }
-  .wish-form .privacy-note {
-    font-size: 10px;
-  }
-  .feedback {
-    font-size: 11px;
-  }
+
+  /* Footer & Thumb-friendly bottom navigation */
   .carousel-footer {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    padding: 6px 10px 8px;
-    gap: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 12px 10px;
+    gap: 8px;
+    z-index: 50;
+  }
+  .footer-summary {
+    display: none !important;
   }
   .bottom-navigation {
-    justify-self: stretch;
+    width: 100%;
+    max-width: 440px;
+    display: flex;
     justify-content: space-between;
-    border-radius: 10px;
-    padding: 3px;
-    gap: 2px;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 9999px;
+    background: var(--card-bg, #FFFCF7);
+    border: 1.5px solid var(--text-main, #2A231F);
+    box-shadow: 2px 2px 0 0 var(--text-main, #2A231F);
   }
   .bottom-navigation button {
-    font-size: 8px;
-    padding: 7px 5px;
-    border-radius: 7px;
+    flex: 1;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 4px;
+    border-radius: 9999px;
+    text-align: center;
+    white-space: nowrap;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    transition: all 0.2s;
+  }
+  .bottom-navigation button.active {
+    background: var(--text-main, #2A231F);
+    color: var(--bg-stage, #FAF4EA);
   }
   .carousel-controls {
+    display: flex;
+    align-items: center;
     justify-content: center;
+    gap: 12px;
   }
   .autoplay-button {
-    min-height: 26px;
-    padding-block: 5px;
-    font-size: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    min-height: 32px;
+    padding: 4px 14px;
+    border-radius: 9999px;
   }
   .carousel-controls .icon-button {
-    width: 28px;
-    height: 26px;
-  }
-  .music-error {
-    top: 120px;
-    right: 12px;
-    left: 12px;
-    max-width: none;
+    width: 34px;
+    height: 32px;
+    border-radius: 9999px;
   }
 }
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

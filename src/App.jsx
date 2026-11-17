@@ -27,7 +27,7 @@ import "./invitation-actions.css";
 
 const slides = [
   "Giới Thiệu",
-  "Thời Gian & Đếm Ngược",
+  "Thời Gian",
   "Thư Cảm Ơn",
   "Lễ chính thức",
 ];
