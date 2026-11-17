@@ -9,7 +9,7 @@ export const event = {
   schoolShort: "IUH",
   degree: "Kỹ sư phần mềm",
   degreeEnglish: "Software Engineer",
-  cohort: "2021 – 2026",
+  cohort: "2021 – 2025",
   date: "2026-11-25T09:30:00+07:00",
   endDate: "2026-11-25T11:30:00+07:00",
   venue: "",
