@@ -11,7 +11,7 @@ export const event = {
   degreeEnglish: "Software Engineer",
   cohort: "2021 – 2025",
   date: "2026-11-25T09:30:00+07:00",
-  endDate: "2026-11-25T11:30:00+07:00",
+  endDate: "2026-11-25T11:00:00+07:00",
   venue: "",
   address: "Số 12 Nguyễn Văn Bảo, P. Hạnh Thông, Thành phố Hồ Chí Minh",
   mapUrl: "https://www.google.com/maps/search/?api=1&query=12+Nguyễn+Văn+Bảo,+P.+Hạnh+Thông,+Thành+phố+Hồ+Chí+Minh",

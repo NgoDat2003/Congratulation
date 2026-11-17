@@ -57,7 +57,7 @@ export function buildCard(name, backgroundDataUrl) {
       h(
         "div",
         { marginTop: 34, alignSelf: "flex-start", padding: "12px 26px", borderRadius: 999, border: `2px solid ${GOLD}`, color: GOLD, fontSize: 24, fontWeight: 700 },
-        "Thứ Tư · 25/11/2026 · IUH",
+        "9:30 – 11:00 · Thứ Tư · 25/11/2026",
       ),
     ),
   );
@@ -71,7 +71,7 @@ export async function GET(request) {
   if (!background.ok) return new Response("Background image missing", { status: 500 });
   const backgroundDataUrl = `data:image/jpeg;base64,${Buffer.from(await background.arrayBuffer()).toString("base64")}`;
 
-  const sansText = `THIỆP MỜI LỄ TỐT NGHIỆP đến chung vui ngày tốt nghiệp của Ngô Quốc Đạt Thứ Tư · 25/11/2026 · IUH`;
+  const sansText = `THIỆP MỜI LỄ TỐT NGHIỆP 0123456789:– đến chung vui ngày tốt nghiệp của Ngô Quốc Đạt 9:30 – 11:00 · Thứ Tư · 25/11/2026`;
   const [sansRegular, sansBold, serifBold, serifItalic] = await Promise.all([
     loadGoogleFont("Be+Vietnam+Pro", 400, false, sansText),
     loadGoogleFont("Be+Vietnam+Pro", 700, false, sansText),
