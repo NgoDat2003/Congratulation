@@ -32,11 +32,116 @@ const slides = [
   "Lễ chính thức",
 ];
 
+const THEMES = [
+  {
+    id: "royal",
+    name: "Hoàng Gia",
+    tagline: "Royal Midnight & Gold",
+    icon: "👑",
+    key: "1",
+    desc: "Sang trọng, dạ tiệc, viền vàng 24K & hiệu ứng ánh kim hoàng gia",
+  },
+  {
+    id: "editorial",
+    name: "Paper & Ink",
+    tagline: "Warm Terracotta & Paper",
+    icon: "🎨",
+    key: "2",
+    desc: "Bảng màu ký họa từ Portfolio: Nền kem #FAF4EA, mực nâu ấm #2A231F, nhấn Terracotta #D9654B và bóng đổ sketch",
+  },
+  {
+    id: "cyber",
+    name: "Cyberpunk",
+    tagline: "Neon Cyan & Tech Glass",
+    icon: "⚡",
+    key: "3",
+    desc: "Kỹ sư công nghệ, kính mờ tương lai, hiệu ứng cực quang neon sắc sảo",
+  },
+  {
+    id: "vintage",
+    name: "Sổ Kỷ Niệm",
+    tagline: "Mahogany & Parchment",
+    icon: "📔",
+    key: "4",
+    desc: "Sổ tay lưu bút da cổ điển, giấy da parchment ấm áp, hoài niệm thanh xuân",
+  },
+  {
+    id: "minimal",
+    name: "Tối Giản",
+    tagline: "Swiss Gallery Monochrome",
+    icon: "🖤",
+    key: "5",
+    desc: "Phong cách triển lãm Thụy Sĩ, đen tuyền đối lập sắc sảo, tối giản hiện đại",
+  },
+];
+
+function ThemeSwitcher({ activeTheme, onSelectTheme }) {
+  const [open, setOpen] = useState(false);
+  const current = THEMES.find((t) => t.id === activeTheme) || THEMES[0];
+
+  return (
+    <aside className="theme-switcher-dock" aria-label="Bộ chọn 5 hệ thống giao diện">
+      {!open ? (
+        <button
+          className="theme-switcher-pill-btn"
+          onClick={() => setOpen(true)}
+          title="Nhấn để đổi giữa 5 phong cách thiết kế (hoặc bấm phím 1 - 5)"
+        >
+          <span className="pill-dot" />
+          <span>
+            {current.icon} {current.name}
+          </span>
+          <span style={{ opacity: 0.75, fontSize: "11px", marginLeft: "4px" }}>
+            [Phím 1-5]
+          </span>
+        </button>
+      ) : (
+        <div className="theme-switcher-bar">
+          <div className="theme-switcher-header">
+            <div className="theme-switcher-title">
+              <strong>CHỌN PHONG CÁCH THIẾT KẾ (5 HỆ THỐNG)</strong>
+              <small>Bấm phím số 1 – 5 trên bàn phím hoặc click trực tiếp</small>
+            </div>
+            <button
+              className="theme-switcher-close-btn"
+              onClick={() => setOpen(false)}
+              aria-label="Đóng bảng chọn giao diện"
+            >
+              ✕
+            </button>
+          </div>
+          <div className="theme-switcher-list">
+            {THEMES.map((item) => {
+              const isActive = item.id === activeTheme;
+              return (
+                <button
+                  key={item.id}
+                  className={`theme-card-option ${isActive ? "is-active" : ""}`}
+                  onClick={() => onSelectTheme(item.id)}
+                >
+                  <div className="theme-option-top">
+                    <span className="theme-option-num">#{item.key}</span>
+                    <span className="theme-option-icon">{item.icon}</span>
+                    <span className="theme-option-name">{item.name}</span>
+                  </div>
+                  <span className="theme-option-desc">{item.tagline}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </aside>
+  );
+}
+
 function Portrait({ compact = false }) {
   const [broken, setBroken] = useState(false);
+  const hasImage = Boolean(event.portrait && !broken);
+
   return (
     <div className={`portrait-card ${compact ? "compact" : ""}`}>
-      {event.portrait && !broken ? (
+      {hasImage ? (
         <img
           src={event.portrait}
           alt={`Ảnh tốt nghiệp của ${event.name}`}
@@ -45,25 +150,21 @@ function Portrait({ compact = false }) {
           draggable="false"
         />
       ) : (
-        <div className="portrait-placeholder">
-          <div className="portrait-halo" />
-          <GraduationCap size={95} strokeWidth={0.7} />
-          <span>ẢNH TỐT NGHIỆP</span>
-          <small>Thêm ảnh của bạn tại src/event.js</small>
-        </div>
+        <>
+          <div className="portrait-placeholder">
+            <div className="portrait-halo" />
+            <GraduationCap size={95} strokeWidth={0.7} />
+            <span>ẢNH TỐT NGHIỆP</span>
+            <small>Thêm ảnh của bạn tại src/event.js</small>
+          </div>
+          <div className="portrait-shade" />
+          <div className="portrait-caption">
+            <span>{event.degree}</span>
+            <h3>{event.name}</h3>
+            <p>{event.portraitCaption}</p>
+          </div>
+        </>
       )}
-      <div className="portrait-shade" />
-      <span className="corner corner-top" />
-      <span className="corner corner-bottom" />
-      <div className="portrait-brand">
-        <GraduationCap size={26} strokeWidth={1.3} />
-        <span>{event.schoolShort}</span>
-      </div>
-      <div className="portrait-caption">
-        <span>{event.degree}</span>
-        <h3>{event.name}</h3>
-        <p>{event.portraitCaption}</p>
-      </div>
     </div>
   );
 }
@@ -223,14 +324,12 @@ function Invitation({ navigate, guestName }) {
           </span>
         )}
         <div className="invitation-contact">
-          {event.facebookUrl && (
+          {event.phone && (
             <a
-              href={event.facebookUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={`tel:${event.phone}`}
               className="button light-outline"
             >
-              Facebook
+              Hotline: {event.phone}
             </a>
           )}
           {event.zaloUrl && (
@@ -243,7 +342,17 @@ function Invitation({ navigate, guestName }) {
               Zalo
             </a>
           )}
-          {!event.facebookUrl && !event.zaloUrl && (
+          {event.facebookUrl && (
+            <a
+              href={event.facebookUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="button light-outline"
+            >
+              Facebook
+            </a>
+          )}
+          {!event.facebookUrl && !event.zaloUrl && !event.phone && (
             <span>Sự hiện diện của bạn là niềm vinh hạnh của mình.</span>
           )}
         </div>
@@ -278,6 +387,10 @@ function Ticker({ bottom = false, paused = false }) {
 }
 
 export default function App({ guestName, music }) {
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem("graduation_theme");
+    return (saved === "royal" || !saved) ? "editorial" : saved;
+  });
   const [active, setActive] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(
     () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
@@ -354,6 +467,23 @@ export default function App({ guestName, music }) {
     document.addEventListener("keydown", keydown);
     return () => document.removeEventListener("keydown", keydown);
   }, [active, navigate]);
+  const handleSelectTheme = (newTheme) => {
+    setTheme(newTheme);
+    localStorage.setItem("graduation_theme", newTheme);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (["INPUT", "TEXTAREA"].includes(document.activeElement?.tagName)) return;
+      const match = THEMES.find((t) => t.key === e.key);
+      if (match) {
+        handleSelectTheme(match.id);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   function swipeEnd(e) {
     if (!touch.current) return;
     const dx = e.changedTouches[0].clientX - touch.current.x,
@@ -363,7 +493,7 @@ export default function App({ guestName, music }) {
     touch.current = null;
   }
   return (
-    <div className="invitation-app">
+    <div className={`invitation-app theme-${theme}`}>
       <a className="skip-link" href="#carousel">
         Đến nội dung thiệp
       </a>
@@ -587,6 +717,7 @@ export default function App({ guestName, music }) {
       >
         Trang {active + 1} trên 4: {slides[active]}
       </span>
+      <ThemeSwitcher activeTheme={theme} onSelectTheme={handleSelectTheme} />
       {musicError && (
         <div className="music-error" role="alert">
           {musicError}

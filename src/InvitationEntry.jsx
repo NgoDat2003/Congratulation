@@ -69,11 +69,11 @@ export default function InvitationEntry() {
         <svg className="entry-envelope-front" viewBox="0 0 380 238" preserveAspectRatio="none">
           <defs>
             <linearGradient id="entry-paper" x2="1" y2="1">
-              <stop stopColor="#27486e" />
-              <stop offset="1" stopColor="#10294b" />
+              <stop stopColor="#352e29" />
+              <stop offset="1" stopColor="#221c18" />
             </linearGradient>
           </defs>
-          <path d="M1 1 L190 129 L379 1 V228 Q379 237 370 237 H10 Q1 237 1 228 Z" fill="url(#entry-paper)" stroke="#cbb55b" />
+          <path d="M1 1 L190 129 L379 1 V228 Q379 237 370 237 H10 Q1 237 1 228 Z" fill="url(#entry-paper)" stroke="#2A231F" strokeWidth="2" />
         </svg>
         <div className="entry-envelope-flap" />
         <div className="entry-envelope-seal"><Sparkle size={24} fill="currentColor" strokeWidth={1} /></div>

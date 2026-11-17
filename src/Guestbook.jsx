@@ -36,6 +36,7 @@ export default function Guestbook() {
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
+  const [showBook, setShowBook] = useState(false);
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
   const [name, setName] = useState("");
@@ -111,7 +112,9 @@ export default function Guestbook() {
       setWishes((current) => [data.wish, ...current]);
       setTotal((current) => current + 1);
       setPage(0);
-      setOpen(true);
+      if (showBook) {
+        setOpen(true);
+      }
       setName("");
       setMessage("");
       setSuccess(true);
@@ -125,135 +128,146 @@ export default function Guestbook() {
   }
   const wish = wishes[page];
   return (
-    <div className="ceremony-layout">
-      <div className="diary-column">
-        <div className="diary-heading">
-          <span className="eyebrow">THE KEEPSAKE COLLECTION · {dateParts.year}</span>
-          <h2>Giữ lại một chút thanh xuân</h2>
-          <p>Một cuốn sách nhỏ. Những lời thương còn mãi.</p>
-        </div>
-        <div className={`diary-book ${open ? "book-is-open" : ""}`}>
-          {!open ? (
+    <div className={`ceremony-layout ${showBook ? "with-diary" : "form-only"}`}>
+      {showBook && (
+        <div className="diary-column">
+          <div className="diary-top-actions">
             <button
-              className="book-cover"
-              onClick={() => setOpen(true)}
-              aria-label="Mở sổ lưu bút tốt nghiệp"
-              aria-expanded={false}
+              type="button"
+              className="button outline small diary-hide-btn"
+              onClick={() => setShowBook(false)}
             >
-              <span className="cover-edition">KỶ NIỆM NGÀY TỐT NGHIỆP</span>
-              <span className="cover-emblem"><GraduationCap size={45} strokeWidth={1} /></span>
-              <span className="corner corner-top" />
-              <span className="corner corner-bottom" />
-              <div className="cover-title">
-                <span>THE GRADUATION DIARY</span>
-                <h3>Những năm<br />rực rỡ</h3>
-                <span className="cover-rule" />
-                <strong>{event.name}</strong>
-                <small>{event.cohort}</small>
-              </div>
-              <span className="cover-open-hint">CHẠM ĐỂ MỞ NHỮNG KỶ NIỆM</span>
+              <ArrowLeft size={13} /> Ẩn sổ lưu bút (Chỉ để lại form)
             </button>
-          ) : (
-            <div className="book-spread">
-              <aside className="book-dedication" aria-label="Trang đề tặng">
-                <span className="page-eyebrow">LƯU BÚT NGÀY RA TRƯỜNG</span>
-                <div className="dedication-portrait">
-                  <GraduationCap size={48} strokeWidth={0.8} />
-                  <span>{dateParts.year}</span>
+          </div>
+          <div className="diary-heading">
+            <span className="eyebrow">THE KEEPSAKE COLLECTION · {dateParts.year}</span>
+            <h2>Giữ lại một chút thanh xuân</h2>
+            <p>Một cuốn sách nhỏ. Những lời thương còn mãi.</p>
+          </div>
+          <div className={`diary-book ${open ? "book-is-open" : ""}`}>
+            {!open ? (
+              <button
+                className="book-cover"
+                onClick={() => setOpen(true)}
+                aria-label="Mở sổ lưu bút tốt nghiệp"
+                aria-expanded={false}
+              >
+                <span className="cover-edition">KỶ NIỆM NGÀY TỐT NGHIỆP</span>
+                <span className="cover-emblem"><GraduationCap size={45} strokeWidth={1} /></span>
+                <span className="corner corner-top" />
+                <span className="corner corner-bottom" />
+                <div className="cover-title">
+                  <span>THE GRADUATION DIARY</span>
+                  <h3>Những năm<br />rực rỡ</h3>
+                  <span className="cover-rule" />
+                  <strong>{event.name}</strong>
+                  <small>{event.cohort}</small>
                 </div>
-                <h3>Thanh xuân<br />có bạn.</h3>
-                <p>Có những lời chúc chỉ viết một lần,<br />nhưng sẽ được đọc lại rất nhiều lần.</p>
-                <span className="dedication-signature">{event.name}</span>
-                <span className="page-number">{dateParts.full} · {event.schoolShort}</span>
-              </aside>
-            <article
-              className="book-page"
-              key={wish?.id || "empty"}
-              aria-live="polite"
-              aria-label={`Trang lời chúc ${page + 1}`}
-            >
-              <span className="page-eyebrow">MỘT TRANG KỶ NIỆM</span>
-              <span className="page-ornament">✦</span>
-              {wish ? (
-                <>
-                  <h3>Gửi {event.name},</h3>
-                  <div className="page-message" tabIndex={0} aria-label={`Lời chúc của ${wish.name}`}>{wish.message}</div>
-                  <div className="page-signature">
-                    <span>Thân mến,</span>
-                    <strong>{wish.name}</strong>
-                    <time dateTime={wish.createdAt}>
-                      {formatter.format(new Date(wish.createdAt))}
-                    </time>
+                <span className="cover-open-hint">CHẠM ĐỂ MỞ NHỮNG KỶ NIỆM</span>
+              </button>
+            ) : (
+              <div className="book-spread">
+                <aside className="book-dedication" aria-label="Trang đề tặng">
+                  <span className="page-eyebrow">LƯU BÚT NGÀY RA TRƯỜNG</span>
+                  <div className="dedication-portrait">
+                    <GraduationCap size={48} strokeWidth={0.8} />
+                    <span>{dateParts.year}</span>
                   </div>
-                  <span className="page-number">— {page + 1} —</span>
-                </>
-              ) : (
-                <div className="book-empty">
-                  <BookOpen size={36} strokeWidth={1} />
-                  <h3>
-                    {loadError
-                      ? "Chưa tải được lời chúc"
-                      : loading
-                        ? "Đang mở sổ lưu bút…"
-                        : "Trang đầu tiên dành cho bạn"}
-                  </h3>
-                  <p>
-                    {loadError
-                      ? "Thử kết nối lại bằng nút bên dưới nhé."
-                      : "Viết một lời chúc để mở đầu cuốn nhật ký này nhé."}
-                  </p>
-                </div>
-              )}
-            </article>
-            </div>
+                  <h3>Thanh xuân<br />có bạn.</h3>
+                  <p>Có những lời chúc chỉ viết một lần,<br />nhưng sẽ được đọc lại rất nhiều lần.</p>
+                  <span className="dedication-signature">{event.name}</span>
+                  <span className="page-number">{dateParts.full} · {event.schoolShort}</span>
+                </aside>
+              <article
+                className="book-page"
+                key={wish?.id || "empty"}
+                aria-live="polite"
+                aria-label={`Trang lời chúc ${page + 1}`}
+              >
+                <span className="page-eyebrow">MỘT TRANG KỶ NIỆM</span>
+                <span className="page-ornament">✦</span>
+                {wish ? (
+                  <>
+                    <h3>Gửi {event.name},</h3>
+                    <div className="page-message" tabIndex={0} aria-label={`Lời chúc của ${wish.name}`}>{wish.message}</div>
+                    <div className="page-signature">
+                      <span>Thân mến,</span>
+                      <strong>{wish.name}</strong>
+                      <time dateTime={wish.createdAt}>
+                        {formatter.format(new Date(wish.createdAt))}
+                      </time>
+                    </div>
+                    <span className="page-number">— {page + 1} —</span>
+                  </>
+                ) : (
+                  <div className="book-empty">
+                    <BookOpen size={36} strokeWidth={1} />
+                    <h3>
+                      {loadError
+                        ? "Chưa tải được lời chúc"
+                        : loading
+                          ? "Đang mở sổ lưu bút…"
+                          : "Trang đầu tiên dành cho bạn"}
+                    </h3>
+                    <p>
+                      {loadError
+                        ? "Thử kết nối lại bằng nút bên dưới nhé."
+                        : "Viết một lời chúc để mở đầu cuốn nhật ký này nhé."}
+                    </p>
+                  </div>
+                )}
+              </article>
+              </div>
+            )}
+          </div>
+          <div className="book-controls">
+            <button
+              className="icon-button"
+              aria-label="Lời chúc trước"
+              disabled={!open || page === 0 || loading}
+              onClick={() => setPage(page - 1)}
+            >
+              <ArrowLeft size={15} />
+            </button>
+            <button className="button gold small" onClick={() => setOpen(!open)} aria-expanded={open}>
+              {open ? "ĐÓNG SÁCH" : "MỞ SÁCH"} <span>✦</span>
+            </button>
+            <button
+              className="icon-button"
+              aria-label="Lời chúc tiếp theo"
+              disabled={
+                !open || loading || (page >= wishes.length - 1 && !hasMore)
+              }
+              onClick={nextPage}
+            >
+              <ArrowRight size={15} />
+            </button>
+          </div>
+          <p className="book-hint">
+            {open
+              ? `${wishes.length ? `Trang ${page + 1} · ` : ""}${total} lời chúc được lưu giữ`
+              : "Mở bìa sách để đọc những lời chúc"}
+          </p>
+          <button
+            className="button outline refresh-wishes"
+            onClick={() => load()}
+            disabled={loading}
+          >
+            {loading ? (
+              <LoaderCircle size={12} className="spin" />
+            ) : (
+              <RefreshCw size={12} />
+            )}{" "}
+            {loading ? "Đang tải lời chúc…" : "Cập nhật lời chúc"}
+          </button>
+          {loadError && (
+            <p className="feedback error" role="alert">
+              {loadError}
+            </p>
           )}
         </div>
-        <div className="book-controls">
-          <button
-            className="icon-button"
-            aria-label="Lời chúc trước"
-            disabled={!open || page === 0 || loading}
-            onClick={() => setPage(page - 1)}
-          >
-            <ArrowLeft size={15} />
-          </button>
-          <button className="button gold small" onClick={() => setOpen(!open)} aria-expanded={open}>
-            {open ? "ĐÓNG SÁCH" : "MỞ SÁCH"} <span>✦</span>
-          </button>
-          <button
-            className="icon-button"
-            aria-label="Lời chúc tiếp theo"
-            disabled={
-              !open || loading || (page >= wishes.length - 1 && !hasMore)
-            }
-            onClick={nextPage}
-          >
-            <ArrowRight size={15} />
-          </button>
-        </div>
-        <p className="book-hint">
-          {open
-            ? `${wishes.length ? `Trang ${page + 1} · ` : ""}${total} lời chúc được lưu giữ`
-            : "Mở bìa sách để đọc những lời chúc"}
-        </p>
-        <button
-          className="button outline refresh-wishes"
-          onClick={() => load()}
-          disabled={loading}
-        >
-          {loading ? (
-            <LoaderCircle size={12} className="spin" />
-          ) : (
-            <RefreshCw size={12} />
-          )}{" "}
-          {loading ? "Đang tải lời chúc…" : "Cập nhật lời chúc"}
-        </button>
-        {loadError && (
-          <p className="feedback error" role="alert">
-            {loadError}
-          </p>
-        )}
-      </div>
+      )}
       <form className="wish-form" onSubmit={submit}>
         <span className="eyebrow">MỘT LỜI NHẮN, MỘT KỶ NIỆM</span>
         <h2>Để lại lời thương</h2>
@@ -300,7 +314,7 @@ export default function Guestbook() {
         <button
           className="button gold send-button"
           type="submit"
-          disabled={sending || loading || !name.trim() || !message.trim()}
+          disabled={sending || loading}
         >
           {sending ? (
             <LoaderCircle size={14} className="spin" />
@@ -320,10 +334,51 @@ export default function Guestbook() {
           </p>
         )}
         {success && (
-          <p className="feedback success" role="status">
-            <Check size={14} /> Đã lưu lời chúc vào sách. Cảm ơn bạn!
-          </p>
+          <div className="wish-success-box">
+            <p className="feedback success" role="status">
+              <Check size={14} /> Đã lưu lời chúc vào sách. Cảm ơn bạn rất nhiều!
+            </p>
+            {!showBook && (
+              <button
+                type="button"
+                className="button outline small open-submitted-btn"
+                onClick={() => {
+                  setShowBook(true);
+                  setOpen(true);
+                }}
+              >
+                <BookOpen size={13} /> Mở xem trong sổ lưu bút
+              </button>
+            )}
+          </div>
         )}
+
+        <div className="form-diary-toggle">
+          {!showBook ? (
+            <button
+              type="button"
+              className="button outline small diary-toggle-btn"
+              onClick={() => {
+                setShowBook(true);
+                setOpen(true);
+              }}
+              title="Mở sổ lưu bút để xem những lời chúc đã gửi"
+            >
+              <BookOpen size={14} />
+              {total > 0
+                ? `Mở sổ lưu bút (${total} lời chúc đã gửi)`
+                : "Mở xem sổ lưu bút"}
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="button outline small diary-toggle-btn"
+              onClick={() => setShowBook(false)}
+            >
+              Thu gọn sổ lưu bút (Chỉ hiện form)
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );
