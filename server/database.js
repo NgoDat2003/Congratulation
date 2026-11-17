@@ -199,7 +199,11 @@ export function databaseOptions(env = process.env) {
 export async function connectDatabase(options = databaseOptions()) {
   const env = process.env;
   const supabaseUrl = env.SUPABASE_URL || "https://oylrfdodjqriceehawqt.supabase.co";
-  const supabaseKey = env.SUPABASE_ANON_KEY || env.SUPABASE_KEY;
+  const supabaseKey =
+    env.SUPABASE_ANON_KEY ||
+    env.SUPABASE_KEY ||
+    env.SUPABASE_PUBLISHABLE_KEY ||
+    env.VITE_SUPABASE_ANON_KEY;
 
   if (supabaseKey) {
     console.log(`[Database] Đang kết nối Supabase (${supabaseUrl})...`);
