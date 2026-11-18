@@ -7,7 +7,9 @@
   isolation: isolate;
   min-height: 100dvh;
   padding: clamp(24px, 4vh, 44px) 20px 32px;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -287,7 +289,8 @@
 
 @media (max-width: 480px) {
   .invitation-entry {
-    padding: 28px 16px;
+    padding: 24px 16px 36px;
+    justify-content: flex-start;
   }
   .entry-heading h1 {
     font-size: 28px;
@@ -299,8 +302,8 @@
     font-size: 13px;
   }
   .entry-envelope {
-    margin-top: 56px;
-    margin-bottom: 24px;
+    margin-top: 36px;
+    margin-bottom: 20px;
   }
   .entry-letter {
     gap: 8px;
